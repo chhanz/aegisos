@@ -1,0 +1,31 @@
+# Build artifacts
+output/
+*.qcow2
+*.raw
+*.ami
+*.vmdk
+*.vhd
+
+# Secrets (never commit credentials)
+*.secrets
+aws.secrets
+.env
+config.toml
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Editor / OS
+.DS_Store
+*.swp
+
+# Internal docs (not for public repo)
+DESIGN-PLAN.md
+*-progress.md
+Worklog/
+WORKLOG.md
+NOTES.md

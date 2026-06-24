@@ -1,0 +1,24 @@
+# bootc-image-builder 빌드 설정 예시.
+#
+# 컨테이너 내부의 /config.toml 로 마운트된다(aegisctl disk --config 가 마운트).
+# 모든 커스터마이징은 [customizations] 아래에 둔다.
+# 확인: https://github.com/osbuild/bootc-image-builder (README 의 customizations 예시)
+#
+# 주의: 이 파일에는 비밀(API 키 등)을 넣지 않는다. Hermes 의 config.yaml/.env 는
+# 이미지에 굽지 않고 부팅 후 `hermes setup` 으로 생성한다(DESIGN-PLAN.md 설계).
+
+# 첫 부팅에 SSH 로그인할 사용자. password 는 예시이므로 실제로는 SSH 키만 권장.
+[[customizations.user]]
+name = "hermes"
+# 아래 password 는 예시다. 운영에서는 password 를 빼고 SSH 공개키(key)만 사용하라.
+password = "changeme"
+key = "ssh-ed25519 AAAA...replace-with-your-public-key... you@example.com"
+groups = ["wheel"]
+
+# (선택) 호스트네임 지정.
+# [customizations.hostname]
+# hostname = "hummingbird-hermes"
+
+# (선택) 추가 커널 인자.
+# [customizations.kernel]
+# append = "mitigations=auto"

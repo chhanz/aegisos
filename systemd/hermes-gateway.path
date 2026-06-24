@@ -1,0 +1,12 @@
+[Unit]
+Description=Watch for Hermes config.yaml and start the gateway
+Documentation=https://github.com/NousResearch/hermes-agent
+
+[Path]
+# config.yaml 이 생성되는 순간 hermes-gateway.service 를 자동 기동한다.
+# 첫 부팅 후 사용자가 `hermes setup` 으로 config.yaml 을 만들면 즉시 게이트웨이가 뜬다.
+# 유닛 이름이 .path 와 같으면(hermes-gateway) 동일 이름의 .service 를 자동으로 트리거한다.
+PathExists=/var/lib/hermes/config.yaml
+
+[Install]
+WantedBy=multi-user.target

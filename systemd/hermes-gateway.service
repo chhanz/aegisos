@@ -1,0 +1,25 @@
+[Unit]
+Description=Hermes Agent Gateway
+Documentation=https://github.com/NousResearch/hermes-agent
+After=network-online.target
+Wants=network-online.target
+# config.yaml 이 없으면 조용히 skip 한다(크래시 루프 방지).
+# 첫 부팅 직후에는 사용자가 아직 `hermes setup` 을 하지 않았으므로 config 가 없다.
+ConditionPathExists=/var/lib/hermes/config.yaml
+
+[Service]
+Type=simple
+# 데이터(config.yaml, .env, sessions, logs ...)는 /var/lib/hermes 에 있다.
+Environment=HERMES_HOME=/var/lib/hermes
+# gateway 기동 커맨드.
+# 확인: install.sh 의 maybe_start_gateway() 가 systemd 환경에서
+#   `hermes gateway install` 후 `hermes gateway start` 를, 비-systemd 에서는
+#   `nohup hermes gateway` 를 사용한다. 즉 foreground 직접 실행은 `hermes gateway`.
+#   - https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh
+# systemd Type=simple 에서는 foreground 로 도는 `hermes gateway` 를 직접 ExecStart 한다.
+ExecStart=/usr/local/bin/hermes gateway
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
