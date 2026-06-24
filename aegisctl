@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# aegisctl - thin wrapper for deploy/aegisctl.py
+#
+# Lets you run `./aegisctl <command>` from the repo root instead of
+# `python3 deploy/aegisctl.py <command>`. Resolves its own location, so it
+# works from any working directory and via an absolute path or a PATH symlink.
+set -euo pipefail
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+exec python3 "${SCRIPT_DIR}/deploy/aegisctl.py" "$@"
